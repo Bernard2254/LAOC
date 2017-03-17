@@ -1,0 +1,17 @@
+UNIDADE DE MONITORAMENTO DO HARDWARE
+Sistema Operacional faz uma conexão com o processador para captar dados (número de clocks executados no aplicações, número de instruções realizadas...)
+- No Linux se usa o comando "perf" para realizar esse monitoramento:
+	. "perf list" -> Lista eventos possíveis (cache-misses, cache-references, cpu-cycles, 		instructions, cpu-clock...);
+	. "perf stat" -> Determina que o perf conte os eventos;
+	. "perf -o <arquivo>" -> Indica arquivo de saída onde os resultados vão sari
+	. "perf --apend" -> Adciciona os resultados ao arquivo de saída, caso ele já tenha sidpo 	 especificado
+	. "perf -e <nome eventos>:uk" -> Eventos a serem monitorados
+		obs: u-> Código de usuário; k-> código de sistema operacional;
+	. "perf -B" -> insere separadores de milhares nos números exibidos na saída.
+	. "perf -r 1" -> : executa a aplicação uma única vez;
+
+
+PRÁTICA 
+
+perf stat -o output.txt --append -B -r 1 -e cycles:uk,instructions:uk,cache-references:uk,cache-misses:uk {{NOME APLICAÇÃO}}
+

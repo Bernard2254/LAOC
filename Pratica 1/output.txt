@@ -1,0 +1,50 @@
+# started on Fri Mar 17 15:39:01 2017
+
+
+ Performance counter stats for 'firefox github.com/Bernard2254':
+
+    14.224.944.567      cycles:uk                 [52,29%]
+     9.366.185.107      instructions:uk           #    0,66  insns per cycle         [76,51%]
+     3.603.571.745      cache-references:uk                                          [73,25%]
+       162.554.840      cache-misses:uk           #    4,511 % of all cache refs     [74,54%]
+
+      13,505500684 seconds time elapsed
+
+
+# started on Fri Mar 17 15:41:42 2017
+
+
+ Performance counter stats for 'mysql-workbench':
+
+     2.071.662.529      cycles:uk                 [47,28%]
+     1.448.799.455      instructions:uk           #    0,70  insns per cycle         [79,16%]
+       552.905.290      cache-references:uk                                          [78,47%]
+        14.930.126      cache-misses:uk           #    2,700 % of all cache refs     [74,70%]
+
+       9,191493679 seconds time elapsed
+
+# started on Fri Mar 17 15:43:41 2017
+
+
+ Performance counter stats for 'libreoffice':
+
+     1.676.202.081      cycles:uk                 [51,46%]
+     1.202.069.084      instructions:uk           #    0,72  insns per cycle         [76,78%]
+       425.120.438      cache-references:uk                                          [75,31%]
+        11.189.113      cache-misses:uk           #    2,632 % of all cache refs     [74,50%]
+
+       4,600323919 seconds time elapsed
+
+
+# started on Fri Mar 17 15:47:47 2017
+
+
+ Performance counter stats for 'codeblocks':
+
+    10.803.119.080      cycles:uk                 [51,09%]
+     9.227.674.316      instructions:uk           #    0,85  insns per cycle         [79,31%]
+     2.926.598.404      cache-references:uk                                          [78,57%]
+        51.346.677      cache-misses:uk           #    1,754 % of all cache refs     [74,39%]
+
+      17,588162450 seconds time elapsed
+
