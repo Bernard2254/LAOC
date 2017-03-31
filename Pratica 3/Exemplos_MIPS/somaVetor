@@ -1,0 +1,30 @@
+	.data
+vet: .word 1, 3, 5, 7
+i:   .word 0
+soma: .word 0
+
+	.text
+	la $s0, vet		#carrega o endereço do vetor
+	la $s1, i		#carrega o endereco da variável i
+	la $s2, soma		#carrega o endereco da variável soma
+
+ 
+	
+	lw $s1, 0($s1)		#carrega o valor de i
+	lw $s2, 0($s2)		#carrego o valor de soma
+for:
+	slti $t5, $s1, 4
+	beq $t5, $zero, Exit
+	add $t1, $s1, $s1	# $t0 = 2 * i
+	add $t1, $t1, $t1	# $t0 - 4 * i
+	add $t0, $s0, $t1	# cálculo do encdero de vet[i]
+	lw $t2, 0($t0)		# carrega vet[i]
+	add $s2, $s2, $t2	# soma = soma + vet[i]
+	addi $s1, $s1, 1
+	j for
+Exit:	
+	move $a0,$s2
+	li $v0, 1
+	syscall
+	li $v0, 10 		#chamada de sistema para saída
+	syscall

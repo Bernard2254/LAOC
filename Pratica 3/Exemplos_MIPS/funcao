@@ -1,0 +1,39 @@
+	.data
+g: .word 5
+h: .word 4
+i: .word 3
+jj: .word 2
+f: .word 
+
+	.text
+	lw $a0, g
+	lw $a1, h
+	lw $a2, i
+	lw $a3, jj
+	jal example
+	add $s0, $v0, $zero
+	la $t0, f
+	sw $s0, 0($t0)
+	
+	add $a0, $s0, $zero
+	li $v0, 1
+	syscall
+	
+	li $v0, 10
+	syscall
+	
+example:
+	sub $sp, $sp, 12	# ajusta a pilha
+	sw $t1, 8($sp)		# salva $t1
+	sw $t0, 4($sp)		# salva $t0
+	sw $s0, 0($sp)		# salva $s0
+	add $t0, $a0, $a1	# $t0 = g + h
+	add $t1, $a2, $a3	# $t1 = i + j
+	sub $s0, $t0, $t1	# f = $t0 - $t1
+	add $v0, $s0, $zero	# retorna f
+	lw $s0, 0($sp)		# restaura $s0
+	lw $t0, 4($sp)		# restaura $t0
+	lw $t1, 8($sp)		# restaura $t1
+	add $sp, $sp, 12 	# remove pilha
+	jr $ra
+	
