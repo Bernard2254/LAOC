@@ -1,0 +1,59 @@
+vec: .word 48, 56, 49, 54, 54
+tam: .word 5
+
+main: 
+	la $s0, vec #s0 recebe endereço base de vec
+	lw $t0, tam # t0 recebe 10 (tamanho do vetor)
+	jal crip # criptografa
+	jal descrip # descriptografa
+	j end
+
+jump_back:
+	jr $ra
+
+crip:
+	addi $s1, $zero, 2 #s1=2
+	sub $t1, $t0, $s1 # i = tam-2
+	addi $s1, $zero, 1 #s1=1
+	lw $t5, 16($s0)
+loop2:	slt $t2, $t1, $zero # Se i>=0, t2=0
+	beq $t2, $s1, jump_back # volta para main se i<0 (t2=1)
+	add $t2, $t1, $t1 # t2 = 2i
+	#duas linhas de instrução, é preciso deixar 2i em vez de 4i como no mips
+	add $t2, $t2, $s0 # t2 é endereço base de vec[i]
+	lw $t3, 0($t2) # vec[i]
+	add $t6, $t3, $zero
+	sub $t3, $t3, $t5 # t3 = vec[i]-vec[i+1]
+	add $t5, $t6, $zero
+	slt $t4, $t3, $zero # Se t3<0, t4=1
+	beq $t4, $zero, maiorzero # se t4 for zero implica que t3>=0
+	lwi $t4, 255
+	add $t3, $t3, $t4 # Só entra se t3<0 , t3+255
+maiorzero:	sw $t3, 0($t2) # salva t3 em vec[i]
+	addi $t3, $zero, 1
+	sub $t1, $t1, $t3 # i--
+	j loop2 # volta no loop
+
+descrip:
+	addi $s1, $zero, 2 # s1=2
+	sub $t1, $t0, $s1 # i(t1) = tam-2
+	addi $s1, $zero, 1 # s1=1
+loop3:	slt $t2, $t1, $zero # Se i>=0, t2=0
+	beq $t2, $s1, jump_back # volta para main se i<0 (t2=1)
+	add $t2, $t1, $t1 # t2 = 2i
+	#duas linhas de instrução, é preciso deixar 2i em vez de 4i como no mips
+	add $t2, $t2, $s0 # t2 é endereço base de vec[i]
+	lw $t3, 0($t2) # vec[i]
+	lw $t4, 2($t2) # vec[i+1]
+	#duas linhas de instrução, é preciso deixar o offset baseado nisso
+	add $t3, $t3, $t4 #t3 = vec[i] + vec[i+1]
+	lwi $t2, 255
+	sub $s2, $t3, $t2 # s2 = t3-255
+	slt $t4, $zero, $s2 # Se 0<s2 (t3>255), t4=1
+	beq $t4, $zero, menor255 # desvia caso t3<255
+	sub $t3, $t3, $t2 # subtrai 255 de t3 (só entra se s2>0)
+menor255:	sw $t3, 0($t2) #salva t3 em vec[i]
+	addi $t3, $zero, 1 # t3=1
+	sub $t1, $t1, $t3 #i--
+	j loop3 # volta ao loop
+end:
