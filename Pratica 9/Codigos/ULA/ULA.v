@@ -101,18 +101,21 @@ module Set_less_than(entrada1, entrada2, saida, clk, clr);
 	end
 endmodule
 
-module testeAdd();
+module testAdd();
 	reg clk, clr;
 	reg [7:0] entrada1, entrada2;
 	wire [7:0] saida;
+	integer i=0;
 
 	always
 	begin
 		#1 begin
 			clk = ~clk;
 			if (clk) begin
-				entrada1 = entrada1+1;
-			    entrada2 = entrada2+1;
+				if (i%256==0)
+					entrada2++;
+				i++;
+				entrada1++;
 			end
 		end
 	end
@@ -123,7 +126,7 @@ module testeAdd();
 		clk<=0;
 		entrada1<=8'b00000000;
 		entrada2<=8'b00000000;
-		#512 $finish;
+		#(512*256) $finish;
 	end
 
 	initial
@@ -135,11 +138,11 @@ module testeAdd();
 
 endmodule
 
-module testeSub();
+module testSub();
 	reg clk, clr;
 	reg [7:0] entrada1, entrada2;
 	wire [7:0] saida;
-	integer i=5;
+	integer i=0;
 
 	always
 	begin
@@ -147,8 +150,10 @@ module testeSub();
 			i++;
 			clk = ~clk;
 			if (clk) begin
-				entrada1 = entrada1+i*2;
-			    entrada2 = entrada2+1;
+				if (i%256==0)
+					entrada2++;
+				i++;
+				entrada1++;
 			end
 		end
 	end
@@ -159,7 +164,7 @@ module testeSub();
 		clk<=0;
 		entrada1<=8'b00000000;
 		entrada2<=8'b00000000;
-		#512 $finish;
+		#(512*256) $finish;
 	end
 
 	initial
